@@ -1,0 +1,5 @@
+---
+# defaults file for adrianjuhl.shell_capture_stdout_and_stderr
+
+adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir: "/usr/local/bin"
+adrianjuhl__shell_capture_stdout_and_stderr__script_name: "shell_capture_stdout_and_stderr"

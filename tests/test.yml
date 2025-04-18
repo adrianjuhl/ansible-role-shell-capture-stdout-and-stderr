@@ -1,0 +1,6 @@
+---
+- name: Test
+  hosts: localhost
+  remote_user: root
+  roles:
+    - adrianjuhl.shell_capture_stdout_and_stderr
