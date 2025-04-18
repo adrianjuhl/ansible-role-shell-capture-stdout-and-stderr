@@ -4,7 +4,7 @@
 - name: Setting facts
   ansible.builtin.set_fact:
     adrianjuhl__shell_capture_stdout_and_stderr__install_dir:           "{{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d"
-    adrianjuhl__shell_capture_stdout_and_stderr__script_file_path:      "{{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d/{{ adrianjuhl__thycotic_cli__thycotic_cli_executable_name }}.sh"
+    adrianjuhl__shell_capture_stdout_and_stderr__script_file_path:      "{{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.sh"
     adrianjuhl__shell_capture_stdout_and_stderr__script_link_file_path: "{{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}"
 
 - name: Create script install directory
