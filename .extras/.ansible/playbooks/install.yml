@@ -4,6 +4,6 @@
   tasks:
     - name: Install the capture_stdout_and_stderr function support script
       include_role:
-        name: adrianjuhl.capture_stdout_and_stderr
+        name: adrianjuhl.shell_capture_stdout_and_stderr
         apply:
           become: true
