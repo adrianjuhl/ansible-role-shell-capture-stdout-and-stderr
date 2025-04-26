@@ -58,7 +58,7 @@ The script can be run like this:
 ```
 $ git clone git@github.com:adrianjuhl/ansible-role-shell-capture-stdout-and-stderr.git
 $ cd ansible-role-shell-capture-stdout-and-stderr
-$ .extras/bin/install_thycotic_cli.sh
+$ .extras/bin/install.sh
 ```
 
 ## License
