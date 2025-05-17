@@ -2,5 +2,6 @@
 # defaults file for adrianjuhl.shell_capture_stdout_and_stderr
 
 adrianjuhl__shell_capture_stdout_and_stderr__version: "0.1.0"
+adrianjuhl__shell_capture_stdout_and_stderr__ref_type: "tags" # or "heads"
 adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir: "/usr/local/bin"
 adrianjuhl__shell_capture_stdout_and_stderr__script_name: "shell_capture_stdout_and_stderr"
