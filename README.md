@@ -17,6 +17,12 @@ The directory where shell_capture_stdout_and_stderr is to be installed.
 
 shell_capture_stdout_and_stderr could alternatively be installed into a user's directory, for example: `adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir: "{{ ansible_env.HOME }}/.local/bin"`, in which case the role will not need root access.
 
+**version**
+
+    adrianjuhl__shell_capture_stdout_and_stderr__version: "0.1.0"
+
+The version of the script to install.
+
 ## Dependencies
 
 None.

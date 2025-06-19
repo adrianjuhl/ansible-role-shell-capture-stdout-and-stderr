@@ -1,7 +1,17 @@
 ---
 # defaults file for adrianjuhl.shell_capture_stdout_and_stderr
 
+# The version of the script to install.
 adrianjuhl__shell_capture_stdout_and_stderr__version: "0.1.0"
+
+# The ref type within the git repository of the version to be installed.
+# Valid values are "tags" or "heads".
+# The default of "tags" should be suitable for installing all realease versions of the script as each of these will be given a tag.
+# The value "heads" can be used in the case that a version from a branch is to be installed.
 adrianjuhl__shell_capture_stdout_and_stderr__ref_type: "tags" # or "heads"
+
+# The location where the script is to be installed.
 adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir: "/usr/local/bin"
+
+# The name to give the installed script.
 adrianjuhl__shell_capture_stdout_and_stderr__script_name: "shell_capture_stdout_and_stderr"
