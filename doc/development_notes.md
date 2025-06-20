@@ -1,4 +1,8 @@
 
+## Ansible Galaxy
+
+Roles: [adrianjuhl](https://galaxy.ansible.com/ui/standalone/namespaces/165/)
+
 ## Development cycle
 
 While the role is in development, the role can be imported by including the following in the requirements.yml file:
