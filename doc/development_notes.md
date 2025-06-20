@@ -22,7 +22,7 @@ $ git tag 1.2.3
 $ git push origin 1.2.3
 ```
 
-Then, [import the role into Ansible Galaxy](https://ansible.readthedocs.io/projects/galaxy-ng/en/latest/community/userguide/#importing-roles) (the --role_name parameter is necessary for multi-word-role-name due to [broken import code](https://forum.ansible.com/t/ansible-galaxy-s-role-import-enhancements-and-fixes-for-the-new-year/3206/3)):
+Then, [import the role into Ansible Galaxy](https://ansible.readthedocs.io/projects/galaxy-ng/en/latest/community/userguide.html#importing-roles) (the --role_name parameter is necessary for multi-word-role-name due to [broken import code](https://forum.ansible.com/t/ansible-galaxy-s-role-import-enhancements-and-fixes-for-the-new-year/3206/3)):
 ```
 ansible-galaxy role import --role-name=$(yq '.galaxy_info.role_name' meta/main.yml) adrianjuhl ansible-role-shell-capture-stdout-and-stderr
 ```
