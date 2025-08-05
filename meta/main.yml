@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: shell_capture_stdout_and_stderr
+  role_name: shell_capture
   namespace: adrianjuhl
   description: A shell script that provides a function that is able to capture the standard out and standard error of another call.
   author: Adrian Juhl
