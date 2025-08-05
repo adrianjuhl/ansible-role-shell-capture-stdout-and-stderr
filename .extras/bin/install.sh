@@ -36,17 +36,20 @@ install_thycotic_cli()
   export ANSIBLE_ROLES_PATH=${THIS_SCRIPT_DIRECTORY}/../.ansible/roles/:${HOME}/.ansible/roles/
 
   # Install the dependencies of the playbook:
+  echo "running ansible-galaxy...."
   ANSIBLE_ROLES_PATH=${HOME}/.ansible/roles/ ansible-galaxy install --role-file=${THIS_SCRIPT_DIRECTORY}/../.ansible/roles/requirements.yml --force
   last_command_return_code="$?"
   if [ "${last_command_return_code}" -ne 0 ]; then
     msg "Error: ansible-galaxy role installations failed."
     abort_script
   fi
-
+  echo "ansible-galaxy done"
+  echo "running playbook...."
   ansible-playbook ${ANSIBLE_CHECK_MODE_ARGUMENT} ${ANSIBLE_DIFF_MODE_ARGUMENT} -v \
     --inventory="localhost," \
     --connection=local \
     ${THIS_SCRIPT_DIRECTORY}/../.ansible/playbooks/install.yml
+  echo "playbook done"
 }
 
 parse_script_params()

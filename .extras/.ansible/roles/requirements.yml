@@ -1,7 +1,7 @@
 ---
 # From ansible-galaxy (a release tag)
 #- src: adrianjuhl.shell_capture_stdout_and_stderr
-#  version: 0.1.0
+#  version: 0.1.0-alpha-202506202021
 
 # From a branch from the github repo
 - src: https://github.com/adrianjuhl/ansible-role-shell-capture-stdout-and-stderr
