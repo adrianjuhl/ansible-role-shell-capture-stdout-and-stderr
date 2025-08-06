@@ -17,3 +17,4 @@
     url: "https://raw.githubusercontent.com/adrianjuhl/adrianjuhl-shell-capture-stdout-and-stderr/refs/{{ adrianjuhl__shell_capture_stdout_and_stderr__ref_type }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}/bin/capture_stdout_and_stderr.sh"
     dest: "{{ adrianjuhl__shell_capture_stdout_and_stderr__script_file_path }}"
     mode: "0755"
+  ignore_errors: "{{ ansible_check_mode }}"
