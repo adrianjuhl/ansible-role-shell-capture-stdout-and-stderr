@@ -6,6 +6,10 @@ usage()
 {
   cat <<USAGE_TEXT
 Usage:  ${THIS_SCRIPT_NAME}
+            [--install_bin_dir=<dir>]
+            [--capture_script_name=<script_name>]
+            [--capture_script_version=<version>]
+            [--capture_script_version_ref_type=<tags|heads>]
             [--requires_become=<true|false>]
             [--dry_run] [--show_diff]
             [--help | -h]
@@ -14,6 +18,18 @@ Usage:  ${THIS_SCRIPT_NAME}
 Install the capture_stdout_and_stderr function support script.
 
 Available options:
+    --install_bin_dir=<dir>
+        The directory where the script is to be installed.
+        Defaults to "/usr/local/bin".
+    --capture_script_name<script_name>
+        The name that the script and containing folder is to be given.
+        Defaults to "".
+    --capture_script_version=<version>
+        The version of the script to install.
+        Defaults to "0.1.0".
+    --capture_script_version_ref_type<tags|heads>
+        The ref type of the version.
+        Defaults to "tags".
     --requires_become=<true|false>
         Is privilege escalation required? Defaults to true.
     --dry_run
@@ -40,7 +56,7 @@ install_thycotic_cli()
 
   # Install the dependencies of the playbook:
   echo "running ansible-galaxy...."
-  ANSIBLE_ROLES_PATH=${HOME}/.ansible/roles/ ansible-galaxy install --role-file=${THIS_SCRIPT_DIRECTORY}/../.ansible/roles/requirements.yml --force
+  ANSIBLE_ROLES_PATH=${HOME}/.ansible/roles/ ansible-galaxy role install --role-file=${THIS_SCRIPT_DIRECTORY}/../.ansible/roles/requirements.yml --force
   last_command_return_code="$?"
   if [ "${last_command_return_code}" -ne 0 ]; then
     msg "Error: ansible-galaxy role installations failed."
@@ -57,6 +73,10 @@ install_thycotic_cli()
   ansible-playbook ${ANSIBLE_CHECK_MODE_ARGUMENT} ${ANSIBLE_DIFF_MODE_ARGUMENT} ${ASK_BECOME_PASS_OPTION} -v \
     --inventory="localhost," \
     --connection=local \
+    --extra-vars="adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir=${CAPTURE_SCRIPT_INSTALL_BIN_DIR}" \
+    --extra-vars="adrianjuhl__shell_capture_stdout_and_stderr__script_name=${CAPTURE_SCRIPT_NAME}" \
+    --extra-vars="adrianjuhl__shell_capture_stdout_and_stderr__version=${CAPTURE_SCRIPT_VERSION}" \
+    --extra-vars="adrianjuhl__shell_capture_stdout_and_stderr__ref_type=${CAPTURE_SCRIPT_VERSION_REF_TYPE}" \
     --extra-vars="local_playbook__install_shell_capture_stdout_and_stderr__requires_become=${REQUIRES_BECOME}" \
     ${THIS_SCRIPT_DIRECTORY}/../.ansible/playbooks/install.yml
   echo "playbook done"
@@ -66,6 +86,10 @@ parse_script_params()
 {
   #msg "script params (${#}) are: ${@}"
   # default values of variables set from params
+  CAPTURE_SCRIPT_INSTALL_BIN_DIR="/usr/local/bin"
+  CAPTURE_SCRIPT_NAME="capture_stdout_and_stderr"
+  CAPTURE_SCRIPT_VERSION="0.5.0"
+  CAPTURE_SCRIPT_VERSION_REF_TYPE="tags"
   REQUIRES_BECOME="${TRUE_STRING}"
   REQUIRES_BECOME_PARAM=""
   ANSIBLE_CHECK_MODE_ARGUMENT=""
@@ -74,6 +98,18 @@ parse_script_params()
   while [ "${#}" -gt 0 ]
   do
     case "${1-}" in
+      --install_bin_dir=*)
+        CAPTURE_SCRIPT_INSTALL_BIN_DIR="${1#*=}"
+        ;;
+      --capture_script_name=*)
+        CAPTURE_SCRIPT_NAME="${1#*=}"
+        ;;
+      --capture_script_version=*)
+        CAPTURE_SCRIPT_VERSION="${1#*=}"
+        ;;
+      --capture_script_version_ref_type=*)
+        CAPTURE_SCRIPT_VERSION_REF_TYPE="${1#*=}"
+        ;;
       --requires_become=*)
         REQUIRES_BECOME_PARAM="${1#*=}"
         ;;
