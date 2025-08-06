@@ -3,8 +3,15 @@
 
 - name: "Setting facts"
   ansible.builtin.set_fact:
-    adrianjuhl__shell_capture_stdout_and_stderr__install_dir:           "{{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d/{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}"
-    adrianjuhl__shell_capture_stdout_and_stderr__script_file_path:      "{{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d/{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.sh"
+    adrianjuhl__shell_capture_stdout_and_stderr__install_dir: "\
+      {{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}\
+      /{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d\
+      /{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}"
+    adrianjuhl__shell_capture_stdout_and_stderr__script_file_path: "\
+      {{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}\
+      /{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d\
+      /{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}\
+      /{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.sh"
 
 - name: "Create script install directory"
   ansible.builtin.file:
