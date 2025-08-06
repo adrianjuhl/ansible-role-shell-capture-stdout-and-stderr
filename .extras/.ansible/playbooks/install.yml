@@ -6,4 +6,5 @@
       include_role:
         name: adrianjuhl.shell_capture_stdout_and_stderr
         apply:
-          become: true
+          become: "{{ local_playbook__install_shell_capture_stdout_and_stderr__requires_become }}"
+#          become: true

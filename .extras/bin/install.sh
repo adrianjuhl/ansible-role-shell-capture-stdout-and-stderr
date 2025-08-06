@@ -6,6 +6,7 @@ usage()
 {
   cat <<USAGE_TEXT
 Usage:  ${THIS_SCRIPT_NAME}
+            [--requires_become=<true|false>]
             [--dry_run] [--show_diff]
             [--help | -h]
             [--script_debug]
@@ -13,6 +14,8 @@ Usage:  ${THIS_SCRIPT_NAME}
 Install the capture_stdout_and_stderr function support script.
 
 Available options:
+    --requires_become=<true|false>
+        Is privilege escalation required? Defaults to true.
     --dry_run
         Run the role without making changes.
     --show_diff
@@ -44,10 +47,17 @@ install_thycotic_cli()
     abort_script
   fi
   echo "ansible-galaxy done"
+
+  ASK_BECOME_PASS_OPTION=""
+  if [ "${REQUIRES_BECOME}" = "${TRUE_STRING}" ]; then
+    ASK_BECOME_PASS_OPTION="--ask-become-pass"
+  fi
+
   echo "running playbook...."
-  ansible-playbook ${ANSIBLE_CHECK_MODE_ARGUMENT} ${ANSIBLE_DIFF_MODE_ARGUMENT} -v \
+  ansible-playbook ${ANSIBLE_CHECK_MODE_ARGUMENT} ${ANSIBLE_DIFF_MODE_ARGUMENT} ${ASK_BECOME_PASS_OPTION} -v \
     --inventory="localhost," \
     --connection=local \
+    --extra-vars="local_playbook__install_shell_capture_stdout_and_stderr__requires_become=${REQUIRES_BECOME}" \
     ${THIS_SCRIPT_DIRECTORY}/../.ansible/playbooks/install.yml
   echo "playbook done"
 }
@@ -56,12 +66,17 @@ parse_script_params()
 {
   #msg "script params (${#}) are: ${@}"
   # default values of variables set from params
+  REQUIRES_BECOME="${TRUE_STRING}"
+  REQUIRES_BECOME_PARAM=""
   ANSIBLE_CHECK_MODE_ARGUMENT=""
   ANSIBLE_DIFF_MODE_ARGUMENT=""
   SCRIPT_DEBUG_OPTION="${FALSE_STRING}"
   while [ "${#}" -gt 0 ]
   do
     case "${1-}" in
+      --requires_become=*)
+        REQUIRES_BECOME_PARAM="${1#*=}"
+        ;;
       --dry_run)
         ANSIBLE_CHECK_MODE_ARGUMENT="--check"
         ;;
@@ -85,6 +100,21 @@ parse_script_params()
     esac
     shift
   done
+  case "${REQUIRES_BECOME_PARAM}" in
+    "true")
+      REQUIRES_BECOME="${TRUE_STRING}"
+      ;;
+    "false")
+      REQUIRES_BECOME="${FALSE_STRING}"
+      ;;
+    "")
+      REQUIRES_BECOME="${TRUE_STRING}"
+      ;;
+    *)
+      msg "Error: Invalid requires_become param value: ${REQUIRES_BECOME_PARAM}, expected one of: true, false"
+      abort_script
+      ;;
+  esac
 }
 
 initialize()
