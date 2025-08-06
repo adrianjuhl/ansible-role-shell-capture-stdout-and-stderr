@@ -1,10 +1,9 @@
 ---
-- name: Install the capture_stdout_and_stderr function support script
-  hosts: localhost
+- name: "Install the capture_stdout_and_stderr function support script"
+  hosts: "localhost"
   tasks:
-    - name: Install the capture_stdout_and_stderr function support script
+    - name: "Install the capture_stdout_and_stderr function support script"
       include_role:
-        name: adrianjuhl.shell_capture_stdout_and_stderr
+        name: "adrianjuhl.shell_capture_stdout_and_stderr"
         apply:
           become: "{{ local_playbook__install_shell_capture_stdout_and_stderr__requires_become }}"
-#          become: true

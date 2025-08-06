@@ -23,15 +23,16 @@ Available options:
         Defaults to "/usr/local/bin".
     --capture_script_name<script_name>
         The name that the script and containing folder is to be given.
-        Defaults to "".
+        Defaults to "capture_stdout_and_stderr".
     --capture_script_version=<version>
         The version of the script to install.
-        Defaults to "0.1.0".
+        Defaults to "0.5.0".
     --capture_script_version_ref_type<tags|heads>
         The ref type of the version.
         Defaults to "tags".
     --requires_become=<true|false>
-        Is privilege escalation required? Defaults to true.
+        Is privilege escalation required?
+        Defaults to true.
     --dry_run
         Run the role without making changes.
     --show_diff

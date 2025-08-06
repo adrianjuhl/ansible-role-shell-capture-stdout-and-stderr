@@ -4,10 +4,24 @@ Installs a shell script that provides a function that is able to capture the sta
 
 ## Requirements
 
-* Requires blah.
 * This role requires root access by default (unless configured to install into a directory owned by the ansible user - see Role Variables section), so either run it in a playbook with a global `become: true`, or invoke the role with `become: true`.
 
 ## Role Variables
+
+**version**
+
+    adrianjuhl__shell_capture_stdout_and_stderr__version: "0.5.0"
+
+The version of the script to install.
+
+**ref_type**
+
+    adrianjuhl__shell_capture_stdout_and_stderr__ref_type: "tags"
+
+The ref type within the git repository of the version to be installed.
+Valid values are "tags" or "heads".
+The default of "tags" should be suitable for installing all realease versions of the script as each of these will be given a tag.
+The value "heads" can be used in the case that a version from a branch is to be installed.
 
 **install_bin_dir**
 
@@ -17,11 +31,11 @@ The directory where shell_capture_stdout_and_stderr is to be installed.
 
 shell_capture_stdout_and_stderr could alternatively be installed into a user's directory, for example: `adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir: "{{ ansible_env.HOME }}/.local/bin"`, in which case the role will not need root access.
 
-**version**
+**script_name**
 
-    adrianjuhl__shell_capture_stdout_and_stderr__version: "0.1.0"
+    adrianjuhl__shell_capture_stdout_and_stderr__script_name: "capture_stdout_and_stderr"
 
-The version of the script to install.
+The name to give the script and containing folder.
 
 ## Dependencies
 
@@ -29,27 +43,27 @@ None.
 
 ## Example Playbook
 ```
-- hosts: servers
+- hosts: "servers"
   roles:
     - { role: adrianjuhl.shell_capture_stdout_and_stderr, become: true }
 
 or
 
-- hosts: servers
+- hosts: "servers"
   tasks:
-    - name: Install shell_capture_stdout_and_stderr
+    - name: "Install shell_capture_stdout_and_stderr"
       include_role:
-        name: adrianjuhl.shell_capture_stdout_and_stderr
+        name: "adrianjuhl.shell_capture_stdout_and_stderr"
         apply:
           become: true
 
 or (install into the user's ~/.local/bin directory)
 
-- hosts: servers
+- hosts: "servers"
   tasks:
-    - name: Install shell_capture_stdout_and_stderr
+    - name: "Install shell_capture_stdout_and_stderr"
       include_role:
-        name: adrianjuhl.shell_capture_stdout_and_stderr
+        name: "adrianjuhl.shell_capture_stdout_and_stderr"
       vars:
         adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir: "{{ ansible_env.HOME }}/.local/bin"
 ```

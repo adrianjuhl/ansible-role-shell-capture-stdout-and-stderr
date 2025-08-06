@@ -1,18 +1,18 @@
 ---
 # tasks file for adrianjuhl.shell_capture_stdout_and_stderr
 
-- name: Setting facts
+- name: "Setting facts"
   ansible.builtin.set_fact:
     adrianjuhl__shell_capture_stdout_and_stderr__install_dir:           "{{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d/{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}"
     adrianjuhl__shell_capture_stdout_and_stderr__script_file_path:      "{{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d/{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.sh"
 
-- name: Create script install directory
+- name: "Create script install directory"
   ansible.builtin.file:
     dest: "{{ adrianjuhl__shell_capture_stdout_and_stderr__install_dir }}"
-    state: directory
+    state: "directory"
     mode: "0755"
 
-- name: Copy script into place
+- name: "Copy script into place"
   ansible.builtin.get_url:
     url: "https://raw.githubusercontent.com/adrianjuhl/adrianjuhl-shell-capture-stdout-and-stderr/refs/{{ adrianjuhl__shell_capture_stdout_and_stderr__ref_type }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}/bin/capture_stdout_and_stderr.sh"
     dest: "{{ adrianjuhl__shell_capture_stdout_and_stderr__script_file_path }}"
