@@ -2,7 +2,7 @@
 # defaults file for adrianjuhl.shell_capture_stdout_and_stderr
 
 # The version of the script to install.
-adrianjuhl__shell_capture_stdout_and_stderr__version: "0.1.0-develop-WIP-1" # "0.1.0"
+adrianjuhl__shell_capture_stdout_and_stderr__version: "develop-0.6.0-WIP-1" # "0.1.0"
 
 # The ref type within the git repository of the version to be installed.
 # Valid values are "tags" or "heads".
