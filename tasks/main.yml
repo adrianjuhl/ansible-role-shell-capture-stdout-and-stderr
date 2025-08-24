@@ -1,11 +1,6 @@
 ---
 # tasks file for adrianjuhl.shell_capture_stdout_and_stderr
 
-#  - name: "Setting facts"
-#    ansible.builtin.set_fact:
-#      role_var_name_prefix:
-#        "adrianjuhl__shell_capture_stdout_and_stderr__"
-
 - name: "Setting facts"
   ansible.builtin.set_fact:
     adrianjuhl__shell_capture_stdout_and_stderr__install_dir: "{{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d/{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}"
