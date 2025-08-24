@@ -1,6 +1,6 @@
 # Ansible role: shell_capture_stdout_and_stderr
 
-Installs a shell script that provides a function that is able to capture the standard out and standard error of another call.
+Installs [capture-stdout-and-stderr](https://github.com/adrianjuhl/adrianjuhl-shell-capture-stdout-and-stderr), a shell script with a contained function that provides the ability to capture the standard out and standard error of another command.
 
 ## Requirements
 
