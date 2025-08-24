@@ -3,15 +3,23 @@
 
 - name: "Setting facts"
   ansible.builtin.set_fact:
-    adrianjuhl__shell_capture_stdout_and_stderr__install_dir: "\
-      {{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}\
-      /{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d\
-      /{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}"
-    adrianjuhl__shell_capture_stdout_and_stderr__script_file_path: "\
-      {{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}\
-      /{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d\
-      /{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}\
-      /{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.sh"
+    role_name:
+      "zzzzzadrianjuhl__shell_capture_stdout_and_stderr__"
+    adrianjuhl__shell_capture_stdout_and_stderr__install_dir:
+      "{{ lookup('vars', role_name + 'install_bin_dir') }}/{{ lookup('vars', role_name + 'script_name') }}.d/{{ lookup('vars', role_name + 'version') }}"
+    adrianjuhl__shell_capture_stdout_and_stderr__script_file_path:
+      "{{ lookup('vars', role_name + 'install_bin_dir') }}/{{ lookup('vars', role_name + 'script_name') }}.d/{{ lookup('vars', role_name + 'version') }}/{{ lookup('vars', role_name + 'script_name') }}.sh"
+    adrianjuhl__shell_capture_stdout_and_stderr__script_source_url:
+      "https://raw.githubusercontent.com/adrianjuhl/adrianjuhl-shell-capture-stdout-and-stderr/refs/{{ lookup('vars', role_name + 'ref_type') }}/{{ lookup('vars', role_name + 'version') }}/bin/capture_stdout_and_stderr.sh"
+#    adrianjuhl__shell_capture_stdout_and_stderr__install_dir: "\
+#      {{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}\
+#      /{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d\
+#      /{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}"
+#    adrianjuhl__shell_capture_stdout_and_stderr__script_file_path: "\
+#      {{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}\
+#      /{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d\
+#      /{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}\
+#      /{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.sh"
 
 - name: "Create script install directory"
   ansible.builtin.file:
@@ -21,7 +29,8 @@
 
 - name: "Copy script into place"
   ansible.builtin.get_url:
-    url: "https://raw.githubusercontent.com/adrianjuhl/adrianjuhl-shell-capture-stdout-and-stderr/refs/{{ adrianjuhl__shell_capture_stdout_and_stderr__ref_type }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}/bin/capture_stdout_and_stderr.sh"
+#    url: "https://raw.githubusercontent.com/adrianjuhl/adrianjuhl-shell-capture-stdout-and-stderr/refs/{{ adrianjuhl__shell_capture_stdout_and_stderr__ref_type }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}/bin/capture_stdout_and_stderr.sh"
+    url: "{{ adrianjuhl__shell_capture_stdout_and_stderr__script_source_url }}"
     dest: "{{ adrianjuhl__shell_capture_stdout_and_stderr__script_file_path }}"
     mode: "0755"
   ignore_errors: "{{ ansible_check_mode }}"

@@ -26,7 +26,7 @@ Available options:
         Defaults to "capture_stdout_and_stderr".
     --capture_script_version=<version>
         The version of the script to install.
-        Defaults to "0.5.0".
+        Defaults to "0.6.0-rc-1".
     --capture_script_version_ref_type<tags|heads>
         The ref type of the version.
         Defaults to "tags".
