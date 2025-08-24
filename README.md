@@ -8,9 +8,11 @@ Installs [capture-stdout-and-stderr](https://github.com/adrianjuhl/adrianjuhl-sh
 
 ## Role Variables
 
+Role variables and their defaults.
+
 **version**
 
-    adrianjuhl__shell_capture_stdout_and_stderr__version: "0.5.0"
+    adrianjuhl__shell_capture_stdout_and_stderr__version: "0.6.0-rc-1"
 
 The version of the script to install.
 
