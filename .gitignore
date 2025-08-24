@@ -1,0 +1,4 @@
+
+# ansible-lint erroneously creates the following directory link
+# See: https://github.com/ansible/ansible-lint/issues/4533
+.ansible/roles/adrianjuhl.shell_capture_stdout_and_stderr
