@@ -56,10 +56,15 @@ install_thycotic_cli()
   export ANSIBLE_ROLES_PATH=${THIS_SCRIPT_DIRECTORY}/../.ansible/roles/:${HOME}/.ansible/roles/
 
   # Install the dependencies of the playbook:
-  ANSIBLE_ROLES_PATH=${HOME}/.ansible/roles/ ansible-galaxy role install --role-file=${THIS_SCRIPT_DIRECTORY}/../.ansible/roles/requirements.yml --force
+  ANSIBLE_ROLES_PATH="${HOME}/.ansible/roles/" \
+      ansible-galaxy \
+      role \
+      install \
+      --role-file=${THIS_SCRIPT_DIRECTORY}/../.ansible/roles/requirements.yml \
+      --force
   last_command_return_code="$?"
   if [ "${last_command_return_code}" -ne 0 ]; then
-    msg "Error: ansible-galaxy role installations failed."
+    echo >&2 "Error: ansible-galaxy role installations failed."
     abort_script
   fi
 
@@ -81,7 +86,7 @@ install_thycotic_cli()
 
 parse_script_params()
 {
-  #msg "script params (${#}) are: ${@}"
+  #echo >&2 "script params (${#}) are: ${@}"
   # default values of variables set from params
   CAPTURE_SCRIPT_INSTALL_BIN_DIR="/usr/local/bin"
   CAPTURE_SCRIPT_NAME="capture_stdout_and_stderr"
@@ -125,8 +130,8 @@ parse_script_params()
         SCRIPT_DEBUG_OPTION="${TRUE_STRING}"
         ;;
       -?*)
-        msg "Error: Unknown parameter: ${1}"
-        msg "Use --help for usage help"
+        echo >&2 "Error: Unknown parameter: ${1}"
+        echo >&2 "Use --help for usage help"
         abort_script
         ;;
       *) break ;;
@@ -144,7 +149,7 @@ parse_script_params()
       REQUIRES_BECOME="${TRUE_STRING}"
       ;;
     *)
-      msg "Error: Invalid requires_become param value: ${REQUIRES_BECOME_PARAM}, expected one of: true, false"
+      echo >&2 "Error: Invalid requires_become param value: ${REQUIRES_BECOME_PARAM}, expected one of: true, false"
       abort_script
       ;;
   esac
@@ -170,9 +175,7 @@ initialize_this_script_directory_variable()
   last_command_return_code="$?"
   if [ "${last_command_return_code}" -gt 0 ]; then
     # This should not occur for the above command pipeline.
-    msg
-    msg "Error: Failed to determine the value of this_script_directory."
-    msg
+    echo >&2 "Error: Failed to determine the value of this_script_directory."
     abort_script
   fi
 }
@@ -219,11 +222,6 @@ abort_script()
   echo >&2 "aborting..."
   kill -SIGUSR1 ${THIS_SCRIPT_PROCESS_ID}
   exit
-}
-
-msg()
-{
-  echo >&2 -e "${@}"
 }
 
 # Main entry into the script - call the main() function
