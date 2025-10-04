@@ -16,3 +16,6 @@ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir: "/usr/local/bin"
 
 # The name to give the installed script.
 adrianjuhl__shell_capture_stdout_and_stderr__script_name: "capture_stdout_and_stderr"
+
+# Whether to create a symbolic link from the install bin directory to the script in the sub-directory.
+adrianjuhl__shell_capture_stdout_and_stderr__create_symbolic_link: true

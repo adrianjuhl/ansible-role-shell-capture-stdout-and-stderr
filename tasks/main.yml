@@ -6,6 +6,7 @@
     adrianjuhl__shell_capture_stdout_and_stderr__install_dir: "{{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d/{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}"
     adrianjuhl__shell_capture_stdout_and_stderr__script_file_path: "{{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.d/{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.sh"
     adrianjuhl__shell_capture_stdout_and_stderr__script_source_url: "https://raw.githubusercontent.com/adrianjuhl/adrianjuhl-shell-capture-stdout-and-stderr/refs/{{ adrianjuhl__shell_capture_stdout_and_stderr__ref_type }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__version }}/bin/capture_stdout_and_stderr.sh"
+    adrianjuhl__shell_capture_stdout_and_stderr__link_file_path: "{{ adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir }}/{{ adrianjuhl__shell_capture_stdout_and_stderr__script_name }}.sh"
 
 - name: "Create script install directory"
   ansible.builtin.file:
@@ -19,3 +20,10 @@
     dest: "{{ adrianjuhl__shell_capture_stdout_and_stderr__script_file_path }}"
     mode: "0755"
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: "Configure a symbolic link to the script"
+  ansible.builtin.file:
+    src: "{{ adrianjuhl__shell_capture_stdout_and_stderr__script_file_path }}"
+    dest: "{{ adrianjuhl__shell_capture_stdout_and_stderr__link_file_path }}"
+    state: "link"
+  when: "adrianjuhl__shell_capture_stdout_and_stderr__create_symbolic_link"
