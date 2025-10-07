@@ -39,6 +39,12 @@ shell_capture_stdout_and_stderr could alternatively be installed into a user's d
 
 The name to give the script and containing folder.
 
+**create_symbolic_link**
+
+    adrianjuhl__shell_capture_stdout_and_stderr__create_symbolic_link: true
+
+Whether to create a symbolic link from the install bin directory to the installed script in the versioned sub-directory. Boolean true or false value.
+
 ## Dependencies
 
 None.
