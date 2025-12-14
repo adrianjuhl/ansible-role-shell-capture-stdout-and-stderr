@@ -1,0 +1,2 @@
+tasks/main.yml yaml[line-length]
+tasks/main.yml yaml[colons]
