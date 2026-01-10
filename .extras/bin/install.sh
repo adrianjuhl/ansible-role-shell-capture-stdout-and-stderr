@@ -27,7 +27,7 @@ Available options:
         Defaults to "capture_stdout_and_stderr".
     --capture_script_version=<version>
         The version of the script to install.
-        Defaults to "0.6.0".
+        Defaults to "0.7.0".
     --capture_script_version_ref_type<tags|heads>
         The ref type of the version.
         Defaults to "tags".
@@ -47,12 +47,12 @@ USAGE_TEXT
 
 main()
 {
-  initialize
-  parse_script_params "${@}"
-  install_thycotic_cli
+  initialize || { echo >&2 "Error: Failed to initialize script environment."; return 1; }
+  parse_script_params "${@}" || { echo >&2 "Error: Failed to parse parameters."; return 1; }
+  install_shell_capture_stdout_and_stderr || { echo >&2 "Error: Failed to install shell_capture_stdout_and_stderr."; return 1; }
 }
 
-install_thycotic_cli()
+install_shell_capture_stdout_and_stderr()
 {
   export ANSIBLE_ROLES_PATH="${THIS_SCRIPT_DIRECTORY}/../.ansible/roles/:${HOME}/.ansible/roles/"
 
@@ -66,7 +66,7 @@ install_thycotic_cli()
   last_command_return_code="$?"
   if [ "${last_command_return_code}" -ne 0 ]; then
     echo >&2 "Error: ansible-galaxy role installations failed."
-    abort_script
+    return 1
   fi
 
   ANSIBLE_VERBOSE_ARGUMENT="-v"
@@ -84,7 +84,7 @@ install_thycotic_cli()
     "${ASK_BECOME_PASS_OPTION}" \
     "--inventory=localhost," \
     "--connection=local" \
-    "--extra-vars=adrianjuhl__shell_capture_stdout_and_stderr__install_bin_dir=${CAPTURE_SCRIPT_INSTALL_BIN_DIR}" \
+    "--extra-vars=adrianjuhl__shell_capture_stdout_and_stderr__install_bin_directory=${CAPTURE_SCRIPT_INSTALL_BIN_DIR}" \
     "--extra-vars=adrianjuhl__shell_capture_stdout_and_stderr__script_name=${CAPTURE_SCRIPT_NAME}" \
     "--extra-vars=adrianjuhl__shell_capture_stdout_and_stderr__version=${CAPTURE_SCRIPT_VERSION}" \
     "--extra-vars=adrianjuhl__shell_capture_stdout_and_stderr__ref_type=${CAPTURE_SCRIPT_VERSION_REF_TYPE}" \
@@ -101,7 +101,7 @@ parse_script_params()
   # default values of variables set from params
   CAPTURE_SCRIPT_INSTALL_BIN_DIR="/usr/local/bin"
   CAPTURE_SCRIPT_NAME="capture_stdout_and_stderr"
-  CAPTURE_SCRIPT_VERSION="0.6.0"
+  CAPTURE_SCRIPT_VERSION="0.7.0"
   CAPTURE_SCRIPT_VERSION_REF_TYPE="tags"
   REQUIRES_BECOME="${TRUE_STRING}"
   REQUIRES_BECOME_PARAM=""
@@ -143,7 +143,7 @@ parse_script_params()
       -?*)
         echo >&2 "Error: Unknown parameter: ${1}"
         echo >&2 "Use --help for usage help"
-        abort_script
+        return 1
         ;;
       *) break ;;
     esac
@@ -161,7 +161,7 @@ parse_script_params()
       ;;
     *)
       echo >&2 "Error: Invalid requires_become param value: ${REQUIRES_BECOME_PARAM}, expected one of: true, false"
-      abort_script
+      return 1
       ;;
   esac
 }
@@ -202,9 +202,19 @@ initialize()
   set -o pipefail
   THIS_SCRIPT_PROCESS_ID=$$
   initialize_abort_script_config
+  initialize_this_script_directory_variable || { return 1; }
   initialize_this_script_directory_variable
   initialize_this_script_name_variable
   initialize_true_and_false_strings
+}
+
+initialize_abort_script_config()
+{
+  # Exit shell script from within the script or from any subshell within this script - adapted from:
+  # https://cravencode.com/post/essentials/exit-shell-script-from-subshell/
+  # Exit with exit status 1 if this (top level process of this script) receives the SIGUSR1 signal.
+  # See also the abort_script() function which sends the signal.
+  trap "exit 1" SIGUSR1
 }
 
 initialize_this_script_directory_variable()
@@ -213,12 +223,13 @@ initialize_this_script_directory_variable()
   # See: https://www.binaryphile.com/bash/2020/01/12/determining-the-location-of-your-script-in-bash.html
   # See: https://stackoverflow.com/a/67149152
   local last_command_return_code
-  THIS_SCRIPT_DIRECTORY=$(cd "$(dirname -- "${BASH_SOURCE[0]}")" || exit 1; cd -P -- "$(dirname "$(readlink -- "${BASH_SOURCE[0]}" || echo .)")" || exit 1; pwd)
+  # shellcheck disable=SC2034
+  THIS_SCRIPT_DIRECTORY="$(cd "$(dirname -- "${BASH_SOURCE[0]}")" || exit 1; cd -P -- "$(dirname "$(readlink -- "${BASH_SOURCE[0]}" || echo .)")" || exit 1; pwd)"
   last_command_return_code="$?"
   if [ "${last_command_return_code}" -gt 0 ]; then
     # This should not occur for the above command pipeline.
     echo >&2 "Error: Failed to determine the value of this_script_directory."
-    abort_script
+    return 1
   fi
 }
 
@@ -246,17 +257,10 @@ initialize_true_and_false_strings()
   # so this is as clear as it can be, using, for example:
   # if [ "${my_boolean_var}" = "${TRUE_STRING}" ]; then
   # where previously 'my_boolean_var' is set to either ${TRUE_STRING} or ${FALSE_STRING}
+  # shellcheck disable=SC2034
   TRUE_STRING="true"
+  # shellcheck disable=SC2034
   FALSE_STRING="false"
-}
-
-initialize_abort_script_config()
-{
-  # Exit shell script from within the script or from any subshell within this script - adapted from:
-  # https://cravencode.com/post/essentials/exit-shell-script-from-subshell/
-  # Exit with exit status 1 if this (top level process of this script) receives the SIGUSR1 signal.
-  # See also the abort_script() function which sends the signal.
-  trap "exit 1" SIGUSR1
 }
 
 abort_script()

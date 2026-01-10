@@ -12,7 +12,7 @@ Role variables and their defaults.
 
 **version**
 
-    adrianjuhl__shell_capture_stdout_and_stderr__version: "0.6.0"
+    adrianjuhl__shell_capture_stdout_and_stderr__version: "0.7.0"
 
 The version of the script to install.
 
